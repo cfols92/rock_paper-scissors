@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script>
+            let computerScore = 0;
+            let playerScore = 0;
+
+            //Ask for player's name
+            let playerName = prompt("Please enter your name.")
+
+            //Display welcome message
+            function welcomeMessage() {
+                alert(`Hello ${playerName} and welcome to rock, paper, scissors!`)
+            }
+
+            //Computer selection
+            function computerSelection() {
+                choice = Math.floor(Math.random()*(3));
+
+                if (choice == 0) {
+                    return("rock");
+                } else if (choice == 1) {
+                    return("paper");
+                } else {
+                    return("scissors");
+                }
+            }
+
+            //Player selection
+            function playerSelection() {
+                let playerChoice = prompt("Please enter your selection.");
+                return(playerChoice);
+            }
+
+            //Compare guesses
+            function compare(guess1,guess2) {
+
+                // Message showing who chose what
+                alert(`You chose ${guess1} and the computer chose ${guess2}`);
+
+                //Check for equality
+                if (guess1 === guess2) {
+                    return("It's a tie! No points added to either score.")
+                    return 0;
+                }
+
+                //Check to see if someone won
+                if ((guess1 == "rock" && guess2 == "scissors") || (guess1 == "scissors" && guess2 == "paper") || (guess1 == "paper" && guess2 == "rock")){
+                    alert("Good job! You won that round.");
+                    return(1);
+                } else {
+                    alert("Sorry, the computer won that round.")
+                    return(2);
+                }
+            }
+
+            //Update score
+            function updateScore(compare) {
+
+                if (compare == 1) {
+                    playerScore++;
+                } else if (compare == 2) {
+                    computerScore++;
+                }
+            }
+
+            //Actual function to play through the rounds
+            function playGame(numberOfRounds) {
+
+                welcomeMessage();
+                do {
+                    let computer = computerSelection();
+                    let player = playerSelection();
+                    let results = compare(player,computer);
+
+                    updateScore(results);
+
+                    if (results !== 0) {
+                        numberOfRounds--;
+                    }
+                }
+
+                while (numberOfRounds > 0);
+
+                if (playerScore > computerScore) {
+                    alert(`${playerName} has ${playerScore} points compared to the computer's ${computerScore} points. ${playerName} wins!`);
+                } else if (playerScore < computerScore){
+                    alert(`The computer has ${computerScore} points compare to ${playerName}'s ${playerScore} points. The computer wins this game.`);  
+                } else {
+                    alert(`The computer has ${computerScore} points compare to ${playerName}'s ${playerScore} points. It's a tie!`); 
+                }
+            }
+                playGame(5);
+
+        </script>
+    </body>
+</html>
