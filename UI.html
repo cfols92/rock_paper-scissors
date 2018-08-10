@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link src="UI.css" type="text/css">
+    </head>
+    <body>
+        <h1>Hello, and welcome to rock, paper, scissors!</h1>
+        <button id="rck">Rock</button>
+        <button id="ppr">Paper</button>
+        <button id="scs">Scissors</button>
+        <div id="container"></div>
+        <script>
+
+            //Ask for player's name
+            let playerName = prompt("Please enter your name.")
+
+            //Computer selection
+            let computerSelection = function() {
+                choice = Math.floor(Math.random()*(3));
+
+                if (choice == 0) {
+                    return("rock");
+                } else if (choice == 1) {
+                    return("paper");
+                } else {
+                    return("scissors");
+                }
+            }
+
+            //Player selection
+            const rck = document.querySelector('#rck');
+            rck.addEventListener('click',() => {
+                let playerChoice = "rock";
+                playRound(playerChoice);
+            });
+
+            const ppr = document.querySelector('#ppr');
+            ppr.addEventListener('click',() => {
+                let playerChoice = "paper";
+                playRound(playerChoice);
+            });
+
+            const scs = document.querySelector('#scs');
+            scs.addEventListener('click',() => {
+                let playerChoice = "scissors";
+                playRound(playerChoice);
+            });
+
+            //Compare guesses
+            function compare(playerSelection,computerSelection) {
+
+                // Message showing who chose what
+                alert(`You chose ${playerSelection} and the computer chose ${computerSelection}`);
+
+                //Check for equality
+                if (playerSelection === computerSelection) {
+                    alert("It's a tie! No points added to either score.")
+                    return 0;
+                }
+
+                //Check to see if someone won
+                if ((playerSelection == "rock" && computerSelection == "scissors") || (playerSelection == "scissors" && computerSelection == "paper") || (playerSelection == "paper" && computerSelection == "rock")){
+                    alert("Good job! You won that round.");
+                    return(1);
+                } else {
+                    alert("Sorry, the computer won that round.")
+                    return(2);
+                }
+            }
+
+            //Update score
+            function updateScore(compare) {
+
+                if (compare == 1) {
+                    playerScore++;
+                } else if (compare == 2) {
+                    computerScore++;
+                }
+            }
+
+            let computerScore = 0;
+            let playerScore = 0;
+            
+            function resetScore(){
+                computerScore = 0;
+                playerScore = 0;
+            }
+
+            //Actual game function
+            function playRound(playerChoice) {
+
+                let computer = computerSelection();
+                let player = playerChoice;
+                let results = compare(player,computer);
+
+                updateScore(results);
+                
+                displayScores();
+
+                if (playerScore == 5){
+                    alert(`${playerName} has reached ${playerScore} points. ${playerName} wins!`);
+                    resetScore();
+                    alert(`Make a selection to restart!`);
+                } else if (computerScore == 5){
+                    alert(`The computer has reached ${computerScore} points. The computer wins!`);
+                    resetScore();
+                    alert(`Make a selection to restart!`);
+                }
+            }
+
+            //Display Results
+            const container = document.querySelector('#container');
+
+            const playerScoreDisplay = document.createElement('h1');
+            playerScoreDisplay.classList.add('playerScoreDisplay')
+            playerScoreDisplay.textContent = playerScore;
+
+            container.appendChild(playerScoreDisplay);
+            
+            const computerScoreDisplay = document.createElement('h1');
+            computerScoreDisplay.classList.add('computerScoreDisplay');
+            computerScoreDisplay.textContent = computerScore;
+            
+            container.appendChild(computerScoreDisplay);
+            
+            function displayScores(){
+                playerScoreDisplay.textContent = `${playerName}'s Score: ` + playerScore;
+                computerScoreDisplay.textContent = "Computer's Score: " + computerScore;
+            }
+            
+            displayScores();
+
+        </script>
+    </body>
+</html>
