@@ -17,7 +17,7 @@
             }
 
             //Computer selection
-            function computerSelection() {
+            let computerSelection = function() {
                 choice = Math.floor(Math.random()*(3));
 
                 if (choice == 0) {
@@ -27,28 +27,28 @@
                 } else {
                     return("scissors");
                 }
-            }
+            };
 
             //Player selection
-            function playerSelection() {
+            let playerSelection = function() {
                 let playerChoice = prompt("Please enter your selection.");
                 return(playerChoice);
             }
 
             //Compare guesses
-            function compare(guess1,guess2) {
+            function compare(playerSelection,computerSelection) {
 
                 // Message showing who chose what
-                alert(`You chose ${guess1} and the computer chose ${guess2}`);
+                alert(`You chose ${playerSelection} and the computer chose ${computerSelection}`);
 
                 //Check for equality
-                if (guess1 === guess2) {
-                    return("It's a tie! No points added to either score.")
+                if (playerSelection === computerSelection) {
+                    alert("It's a tie! No points added to either score.")
                     return 0;
                 }
 
                 //Check to see if someone won
-                if ((guess1 == "rock" && guess2 == "scissors") || (guess1 == "scissors" && guess2 == "paper") || (guess1 == "paper" && guess2 == "rock")){
+                if ((playerSelection == "rock" && computerSelection == "scissors") || (playerSelection == "scissors" && computerSelection == "paper") || (playerSelection == "paper" && computerSelection == "rock")){
                     alert("Good job! You won that round.");
                     return(1);
                 } else {
